@@ -9,10 +9,11 @@ class TabNav extends Component {
           {this.props.tabs.map((tab) => {
             const active = tab === this.props.selected ? "selected" : "";
             return (
-              <li>
+              <li key={tab}>
                 <div
                   className={"tab-nav-item " + active}
                   onClick={() => this.props.setSelected(tab)}
+                  key={tab}
                 >
                   {tab}
                 </div>
