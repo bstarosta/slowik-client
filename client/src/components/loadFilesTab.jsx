@@ -13,6 +13,12 @@ class LoadFilesTab extends Component {
     this.setState({ stage: currentStage });
   };
 
+  copyCodeToClipboard = () => {
+    const el = this.textArea;
+    el.select();
+    document.execCommand("copy");
+  };
+
   render() {
     if (this.state.stage === "Loading") {
       return (
@@ -82,6 +88,7 @@ class LoadFilesTab extends Component {
           </p>
           <div className="id-display">
             <textarea
+              ref={(textarea) => (this.textArea = textarea)}
               className="id-text-area"
               rows="1"
               cols="50"
@@ -89,6 +96,10 @@ class LoadFilesTab extends Component {
               draggable="false"
               value={this.state.corpusID}
             ></textarea>
+            <i
+              className="far fa-copy fa-2x copy-button"
+              onClick={() => this.copyCodeToClipboard()}
+            ></i>
           </div>
           <div className="d-inline-flex justify-content-center w-100 results-button-area">
             <Link
