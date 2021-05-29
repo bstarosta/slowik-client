@@ -4,17 +4,17 @@ import "./getByIdTab.css";
 
 class GetByIdTab extends Component {
   state = {
-    corupsId: "",
+    corpusId: "",
     isIdInvalid: false,
   };
 
   handleGetId = () => {
     if (!this.validateId()) this.setState({ isIdInvalid: true });
-    else this.props.history.push("/results/" + this.state.corupsId);
+    else this.props.history.push("/results/" + this.state.corpusId);
   };
 
   validateId() {
-    if (this.state.corupsId === "") return false;
+    if (this.state.corpusId === "") return false;
     return true;
   }
 
@@ -28,7 +28,7 @@ class GetByIdTab extends Component {
             id="idInput"
             className="form-control form-control-lg id-input w-75"
             type="text"
-            onChange={(e) => this.setState({ corupsId: e.target.value })}
+            onChange={(e) => this.setState({ corpusId: e.target.value })}
             placeholder="Enter your corpus ID"
           ></input>
           <div className="error-div">{this.renderIDError()}</div>

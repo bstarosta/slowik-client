@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactLoading from "react-loading";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./loadFilesTab.css";
 
 class LoadFilesTab extends Component {
   state = {
-    corpusID: "030B4A82-1B7C-11CF-9D53-00AA003C9CB6",
+    corpusId: "030B4A82-1B7C-11CF-9D53-00AA003C9CB6",
     email: "",
     isEmailIncorrect: false,
     isFileIncorrect: false,
@@ -56,6 +56,10 @@ class LoadFilesTab extends Component {
     const el = this.textArea;
     el.select();
     document.execCommand("copy");
+  };
+
+  handleResults = () => {
+    this.props.history.push("/results/" + this.state.corpusId);
   };
 
   render() {
@@ -146,7 +150,7 @@ class LoadFilesTab extends Component {
               cols="50"
               readOnly={true}
               draggable="false"
-              value={this.state.corpusID}
+              value={this.state.corpusId}
             ></textarea>
             <i
               className="far fa-copy fa-2x copy-button"
@@ -154,12 +158,15 @@ class LoadFilesTab extends Component {
             ></i>
           </div>
           <div className="d-inline-flex justify-content-center w-100 results-button-area">
-            <Link
-              to={{ pathname: "/results", data: this.state.corpusID }}
+            <button
+              type="button"
               className="blue-button"
+              onClick={() => {
+                this.handleResults();
+              }}
             >
               Results
-            </Link>
+            </button>
           </div>
         </React.Fragment>
       );
@@ -175,4 +182,4 @@ class LoadFilesTab extends Component {
   }
 }
 
-export default LoadFilesTab;
+export default withRouter(LoadFilesTab);
