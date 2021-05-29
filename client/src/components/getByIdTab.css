@@ -9,7 +9,7 @@
 }
 
 .id-input {
-  margin: 80px 60px 30px 60px;
+  margin: 80px 60px 10px 60px;
 }
 
 .next-button {
@@ -29,4 +29,11 @@
 
 .next-button:hover {
   box-shadow: rgba(0, 0, 0, 0.6) 5px 5px 5px;
+}
+
+.error-div {
+  color: red;
+  font: 12px;
+  height: 20px;
+  margin: 0 0 60px 60px;
 }

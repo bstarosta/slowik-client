@@ -9,10 +9,10 @@ class App extends React.Component {
 
   render() { return (
     <React.Fragment>
-                 <Router>
+            <Router>
                 <Switch>
-                    <Route exact path="" component={StartingPage}/>
-                    <Route exact path="/results" component={ResultsPage}/>
+                    <Route exact path="/" component={StartingPage}/>
+                    <Route exact path="/results/:id" component={ResultsPage}/>
                 </Switch>
             </Router>
     </React.Fragment>

@@ -1,10 +1,22 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import "./getByIdTab.css";
 
 class GetByIdTab extends Component {
-  state = {};
+  state = {
+    corupsId: "",
+    isIdInvalid: false,
+  };
 
-  handleGetId = () => {};
+  handleGetId = () => {
+    if (!this.validateId()) this.setState({ isIdInvalid: true });
+    else this.props.history.push("/results/" + this.state.corupsId);
+  };
+
+  validateId() {
+    if (this.state.corupsId === "") return false;
+    return true;
+  }
 
   render() {
     return (
@@ -16,20 +28,27 @@ class GetByIdTab extends Component {
             id="idInput"
             className="form-control form-control-lg id-input w-75"
             type="text"
+            onChange={(e) => this.setState({ corupsId: e.target.value })}
             placeholder="Enter your corpus ID"
           ></input>
-          <input
+          <div className="error-div">{this.renderIDError()}</div>
+          <button
             className="next-button"
-            type="submit"
-            value="Next"
+            type="button"
             onClick={() => {
               this.handleGetId();
             }}
-          ></input>
+          >
+            Next
+          </button>
         </form>
       </div>
     );
   }
+
+  renderIDError() {
+    if (this.state.isIdInvalid) return "Please enter a valid ID";
+  }
 }
 
-export default GetByIdTab;
+export default withRouter(GetByIdTab);
