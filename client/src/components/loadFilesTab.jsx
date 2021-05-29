@@ -5,13 +5,52 @@ import "./loadFilesTab.css";
 
 class LoadFilesTab extends Component {
   state = {
-    stage: "Loading",
     corpusID: "030B4A82-1B7C-11CF-9D53-00AA003C9CB6",
+    email: "",
+    isEmailIncorrect: false,
+    isFileIncorrect: false,
+    stage: "Loading",
   };
 
   setStage = (currentStage) => {
     this.setState({ stage: currentStage });
   };
+
+  handleUpload = () => {
+    let fileInput = document.getElementById("fileInput");
+    let fileIncorrect = false;
+    let emailIncorret = false;
+
+    if (this.checkEmail(this.state.email))
+      this.setState({ isEmailIncorrect: false });
+    else {
+      this.setState({ isEmailIncorrect: true });
+      emailIncorret = true;
+    }
+    if (fileInput.files.length !== 0 && this.checkFile(fileInput.files[0].name))
+      this.setState({ isFileIncorrect: false });
+    else {
+      this.setState({ isFileIncorrect: true });
+      fileIncorrect = true;
+    }
+    if (!emailIncorret && !fileIncorrect) {
+      this.setStage("Processing");
+    }
+  };
+
+  checkFile(file) {
+    var extension = file.substr(file.lastIndexOf(".") + 1);
+    if (!/(zip)$/gi.test(extension)) {
+      return false;
+    }
+    return true;
+  }
+
+  checkEmail(email) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
 
   copyCodeToClipboard = () => {
     const el = this.textArea;
@@ -22,7 +61,7 @@ class LoadFilesTab extends Component {
   render() {
     if (this.state.stage === "Loading") {
       return (
-        <div>
+        <div className="tab-content">
           <p className="header-text">Select files you want to upload</p>
           <p className="body-text">
             Select a ZIP file containing a corpus you want to process. The
@@ -31,20 +70,33 @@ class LoadFilesTab extends Component {
             submit your e-mail so we can notify you when we're done.
           </p>
           <form className="corpus-form">
-            <input className="form-control w-75" type="file"></input>
-            <input
-              className="form-control w-75 mt-2"
-              type="email"
-              placeholder="example@example.com"
-            ></input>
-            <input
+            <div>
+              <input
+                className="form-control w-75"
+                type="file"
+                id="fileInput"
+              ></input>
+              <div className="error-span">{this.renderFileError()}</div>
+            </div>
+            <div>
+              <label className="email-label">Submit your e-mail:</label>
+              <input
+                className="form-control w-75"
+                type="email"
+                placeholder="example@example.com"
+                onChange={(e) => this.setState({ email: e.target.value })}
+              ></input>
+              <div className="error-span">{this.renderEmailError()}</div>
+            </div>
+            <button
+              type="button"
               className="blue-button upload-button"
-              type="submit"
-              value="Upload"
               onClick={() => {
-                this.setStage("Processing");
+                this.handleUpload();
               }}
-            ></input>
+            >
+              Upload
+            </button>
           </form>
         </div>
       );
@@ -52,7 +104,7 @@ class LoadFilesTab extends Component {
 
     if (this.state.stage === "Processing") {
       return (
-        <React.Fragment>
+        <div className="tab-content">
           <p className="header-text">We are processing your files</p>
           <p className="body-text">
             Processing your files may take from a few seconds to a hours
@@ -66,15 +118,15 @@ class LoadFilesTab extends Component {
             width={"100px"}
             className="loading-animation"
           />
-          <button
+          <div
             className="blue-button load-another-button"
             onClick={() => {
               this.setStage("Processed");
             }}
           >
             Load another corpus
-          </button>
-        </React.Fragment>
+          </div>
+        </div>
       );
     }
 
@@ -112,6 +164,14 @@ class LoadFilesTab extends Component {
         </React.Fragment>
       );
     }
+  }
+
+  renderEmailError() {
+    if (this.state.isEmailIncorrect) return "Please enter a valid email";
+  }
+
+  renderFileError() {
+    if (this.state.isFileIncorrect) return "Please upload a .zip file";
   }
 }
 

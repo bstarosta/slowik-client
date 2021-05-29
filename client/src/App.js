@@ -11,7 +11,7 @@ class App extends React.Component {
     <React.Fragment>
                  <Router>
                 <Switch>
-                    <Route exact path="/" component={StartingPage}/>
+                    <Route exact path="" component={StartingPage}/>
                     <Route exact path="/results" component={ResultsPage}/>
                 </Switch>
             </Router>
