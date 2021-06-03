@@ -6,7 +6,7 @@ import "./loadFilesTab.css";
 
 class LoadFilesTab extends Component {
   state = {
-    corpusId: "030B4A82-1B7C-11CF-9D53-00AA003C9CB6",
+    corpusId: "",
     email: "",
     isEmailIncorrect: false,
     isFileIncorrect: false,
@@ -55,8 +55,10 @@ class LoadFilesTab extends Component {
     //formData.append("email", this.state.email);
     AxiosClient.post("/Corpuses", formData).then(
       (res) => {
-        this.setState({ corpusId: res.data });
-        this.setStage("Processed");
+        if (this.state.stage === "Processing") {
+          this.setState({ corpusId: res.data });
+          this.setStage("Processed");
+        }
       },
       (error) => {
         console.log(error);
@@ -143,7 +145,7 @@ class LoadFilesTab extends Component {
           <div
             className="blue-button load-another-button"
             onClick={() => {
-              this.setStage("Processed");
+              this.setStage("Loading");
             }}
           >
             Load another corpus
