@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactLoading from "react-loading";
+import AxiosClient from "./axiosClient";
 import { withRouter } from "react-router-dom";
 import "./loadFilesTab.css";
 
@@ -34,6 +35,7 @@ class LoadFilesTab extends Component {
       fileIncorrect = true;
     }
     if (!emailIncorret && !fileIncorrect) {
+      this.ulpoadToServer();
       this.setStage("Processing");
     }
   };
@@ -44,6 +46,22 @@ class LoadFilesTab extends Component {
       return false;
     }
     return true;
+  }
+
+  ulpoadToServer() {
+    let fileInput = document.getElementById("fileInput");
+    const formData = new FormData();
+    formData.append("zipFile", fileInput.files[0]);
+    //formData.append("email", this.state.email);
+    AxiosClient.post("/Corpuses", formData).then(
+      (res) => {
+        this.setState({ corpusId: res.data });
+        this.setStage("Processed");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   checkEmail(email) {
