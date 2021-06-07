@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const AxiosClient = () => {
-  const instance = Axios.create({ baseURL: "http://localhost:8080/api/" });
+  const instance = Axios.create({ baseURL: "https://localhost:44374/api/" });
   return instance;
 };
 

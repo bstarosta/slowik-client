@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import "./wordInputBox.css";
 
 class WordInputBox extends Component {
-  state = {
-    word: "",
-    isWordInvalid: false,
-    wordNotFounf: false,
-    occurences: "",
-  };
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  state = {};
+
+  handleChange(e) {
+    this.props.onWordChange(e.target.value);
+  }
 
   render() {
     return (
@@ -24,11 +28,16 @@ class WordInputBox extends Component {
               className="form-control form-control w-75"
               type="text"
               placeholder="Enter a word"
+              onChange={this.handleChange}
             ></input>
             <div className="word-input-box-error-div">
               {this.renderWordError()}
             </div>
-            <button className="word-input-box-button" type="button">
+            <button
+              className="word-input-box-button"
+              type="button"
+              onClick={() => this.props.handleAnalyze()}
+            >
               Analyse
             </button>
           </form>
@@ -38,7 +47,7 @@ class WordInputBox extends Component {
   }
 
   renderWordError() {
-    if (this.state.isWordInvalid) return "Enter a correct word";
+    if (this.props.isWordInvalid) return "Enter a correct word";
   }
 }
 

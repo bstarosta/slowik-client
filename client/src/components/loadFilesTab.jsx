@@ -17,6 +17,11 @@ class LoadFilesTab extends Component {
     this.setState({ stage: currentStage });
   };
 
+  handleGoBack = () => {
+    this.setState({ isFileIncorrect: false });
+    this.setStage("Loading");
+  };
+
   handleUpload = () => {
     let fileInput = document.getElementById("fileInput");
     let fileIncorrect = false;
@@ -56,8 +61,12 @@ class LoadFilesTab extends Component {
     AxiosClient.post("/Corpuses", formData).then(
       (res) => {
         if (this.state.stage === "Processing") {
-          this.setState({ corpusId: res.data });
-          this.setStage("Processed");
+          if (res.status === 200) {
+            this.setState({ corpusId: res.data });
+            this.setStage("Processed");
+          } else if (res.status === 400) {
+            this.setStage("BadZip");
+          }
         }
       },
       (error) => {
@@ -186,6 +195,29 @@ class LoadFilesTab extends Component {
               }}
             >
               Results
+            </button>
+          </div>
+        </React.Fragment>
+      );
+    }
+    if (this.state.stage === "BadZip") {
+      return (
+        <React.Fragment>
+          <div className="tab-content">
+            <p className="header-text">Incorrect ZIP file</p>
+            <p className="body-text">
+              It appears that your .zip file contains files with incorrect
+              formats. Please make sure that all files in your .zip are in one
+              of the following formats: pdf, txt, doc, docx, rtf.
+            </p>
+            <button
+              type="button"
+              className="blue-button load-another-button"
+              onClick={() => {
+                this.handleGoBack();
+              }}
+            >
+              Go back
             </button>
           </div>
         </React.Fragment>
