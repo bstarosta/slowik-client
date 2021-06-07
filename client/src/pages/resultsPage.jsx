@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import WordInputBox from "../components/wordInuptBox";
 
 import AppHeader from "../components/appHeader";
 
@@ -18,7 +19,7 @@ class ResultsPage extends Component {
     return (
       <React.Fragment>
         <AppHeader />
-        {this.state.corpusId}
+        <WordInputBox />
       </React.Fragment>
     );
   }

@@ -4,3 +4,22 @@
   height: 60vh;
   margin: 0;
 }
+
+.blue-button {
+  background-color: #576490;
+  border: solid black 1px;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  border-radius: 11px;
+  box-shadow: rgba(0, 0, 0, 0.44) 5px 5px 5px;
+}
+
+.blue-button:hover {
+  box-shadow: rgba(0, 0, 0, 0.6) 5px 5px 5px;
+  color: white;
+}
