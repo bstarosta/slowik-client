@@ -20,15 +20,16 @@ class StartingPage extends React.Component {
     return (
       <React.Fragment>
         <AppHeader />
+        <div className="spacing-div"></div>
         <TabNav
           tabs={this.state.tabs}
           selected={this.state.selected}
           setSelected={this.setSelected}
         >
-          <Tab isSelected={this.state.selected === "Load files"}>
+          <Tab tabStyle="tab" isSelected={this.state.selected === "Load files"}>
             <LoadFilesTab />
           </Tab>
-          <Tab isSelected={this.state.selected === "Get by ID"}>
+          <Tab tabStyle="tab" isSelected={this.state.selected === "Get by ID"}>
             <GetByIdTab />
           </Tab>
         </TabNav>
