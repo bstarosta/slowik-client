@@ -18,3 +18,9 @@
   font-size: 30px;
   margin: 10px 0px 60px 0px;
 }
+
+.data-presentation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

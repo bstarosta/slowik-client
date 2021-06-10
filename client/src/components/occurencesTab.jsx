@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./occurencesTab.css";
 import DataTable from "react-data-table-component";
+import { Chart } from "react-google-charts";
 
 class OccurencesTab extends Component {
   state = {};
@@ -14,6 +15,17 @@ class OccurencesTab extends Component {
     return total;
   }
 
+  formatChartData() {
+    let chartData = this.props.occurences.map((el) => Object.values(el));
+    chartData.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    let slicedChartData = chartData.slice(0, 10);
+    slicedChartData.unshift(["Text File", "Occurences"]);
+
+    return slicedChartData;
+  }
+
   render() {
     return (
       <div className="occurences-tab">
@@ -23,9 +35,9 @@ class OccurencesTab extends Component {
         <p className="total-occurences">
           Total occurences: {this.getTotalOccurences()}
         </p>
-        <div>
+        <div className="data-presentation">
           <div className="occurences-table">{this.renderTable()}</div>
-          <div></div>
+          <div>{this.renderChart()}</div>
         </div>
       </div>
     );
@@ -59,6 +71,33 @@ class OccurencesTab extends Component {
           fixedHeader
           fixedHeaderScrollHeight="300px"
         ></DataTable>
+      </React.Fragment>
+    );
+  }
+
+  renderChart() {
+    return (
+      <React.Fragment>
+        <Chart
+          width={"600px"}
+          height={"410px"}
+          chartType="BarChart"
+          loader={<div>Loading Chart</div>}
+          data={this.formatChartData()}
+          options={{
+            title: "Files with largest occurence count",
+            chartArea: { width: "40%", left: "40%" },
+            hAxis: {
+              title: "Occurences",
+              minValue: 0,
+            },
+            vAxis: {
+              title: "Text File",
+            },
+            legend: { position: "none" },
+            bar: { groupWidth: "90%" },
+          }}
+        ></Chart>
       </React.Fragment>
     );
   }
