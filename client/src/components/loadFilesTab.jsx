@@ -140,7 +140,7 @@ class LoadFilesTab extends Component {
         <div className="tab-content">
           <p className="header-text">We are processing your files</p>
           <p className="body-text">
-            Processing your files may take from a few seconds to a hours
+            Processing your files may take from a few seconds to a few hours
             depending on the size of your corpus. We'll notify you and send an
             ID of your corpus to the submitted e-mail address.
           </p>

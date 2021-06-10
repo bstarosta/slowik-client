@@ -3,9 +3,11 @@ import WordInputBox from "../components/wordInuptBox";
 import TabNav from "../components/tabNav";
 import Tab from "../components/tab";
 import "../App.css";
+import "./resultsPage.css";
 import ReactLoading from "react-loading";
 import AppHeader from "../components/appHeader";
 import AxiosClient from "../components/axiosClient";
+import OccurencesTab from "../components/occurencesTab";
 
 class ResultsPage extends Component {
   constructor(props) {
@@ -45,6 +47,14 @@ class ResultsPage extends Component {
     this.setState({ fieldValue: e.target.value });
   };
 
+  processOccurences(data) {
+    let processedData = Object.entries(data).map(([fileName, count]) => ({
+      fileName,
+      count,
+    }));
+    return processedData;
+  }
+
   getOccurencesFromServer = () => {
     AxiosClient.get(
       "/corpuses/" +
@@ -54,7 +64,8 @@ class ResultsPage extends Component {
         "&groupByFiles=true"
     ).then(
       (res) => {
-        this.setState({ occurencesFiles: res.data });
+        let occurences = this.processOccurences(res.data);
+        this.setState({ occurencesFiles: occurences });
         this.setState({ stage: "Results" });
       },
       (error) => {
@@ -105,7 +116,12 @@ class ResultsPage extends Component {
         <Tab
           tabStyle="results-tab"
           isSelected={this.state.selected === "Occurences"}
-        ></Tab>
+        >
+          <OccurencesTab
+            word={this.state.word}
+            occurences={this.state.occurencesFiles}
+          ></OccurencesTab>
+        </Tab>
         <Tab
           tabStyle="results-tab"
           isSelected={this.state.selected === "Colocations"}
@@ -122,7 +138,7 @@ class ResultsPage extends Component {
           color="#576490"
           height={"100px"}
           width={"100px"}
-          className="loading-animation"
+          className="results-loading-animation"
         ></ReactLoading>
       </div>
     );
