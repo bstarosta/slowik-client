@@ -4,7 +4,13 @@ import DataTable from "react-data-table-component";
 import { Chart } from "react-google-charts";
 
 class OccurencesTab extends Component {
-  state = {};
+  state = {
+    word: "",
+  };
+
+  componentDidMount() {
+    this.setState({ word: this.props.word });
+  }
 
   getTotalOccurences() {
     let total = 0;
@@ -30,7 +36,7 @@ class OccurencesTab extends Component {
     return (
       <div className="occurences-tab">
         <p className="occurences-header">
-          Occurences of the word "{this.props.word}"
+          Occurences of the word "{this.state.word}"
         </p>
         <p className="total-occurences">
           Total occurences: {this.getTotalOccurences()}

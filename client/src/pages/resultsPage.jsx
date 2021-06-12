@@ -71,9 +71,13 @@ class ResultsPage extends Component {
         "&groupByFiles=true"
     ).then(
       (res) => {
-        let occurences = this.processOccurences(res.data);
-        this.setState({ occurencesFiles: occurences });
-        this.setState({ stage: "Results" });
+        if (res.status === 200) {
+          let occurences = this.processOccurences(res.data);
+          this.setState({ occurencesFiles: occurences });
+          this.setState({ stage: "Results" });
+        } else if (res.status === 204) {
+          this.setState({ stage: "NoWord" });
+        }
       },
       (error) => {
         console.log(error);
@@ -173,6 +177,8 @@ class ResultsPage extends Component {
       return <React.Fragment>{this.renderLoading()}</React.Fragment>;
     if (this.state.stage === "Results")
       return <React.Fragment>{this.renderResults()}</React.Fragment>;
+    if (this.state.stage === "NoWord")
+      return <WordNotFoundBox></WordNotFoundBox>;
   }
 
   renderResults() {

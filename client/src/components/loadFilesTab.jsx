@@ -57,8 +57,7 @@ class LoadFilesTab extends Component {
     let fileInput = document.getElementById("fileInput");
     const formData = new FormData();
     formData.append("zipFile", fileInput.files[0]);
-    //formData.append("email", this.state.email);
-    AxiosClient.post("/Corpuses", formData).then(
+    AxiosClient.post("/Corpuses?email=" + this.state.email, formData).then(
       (res) => {
         if (this.state.stage === "Processing") {
           if (res.status === 200) {
