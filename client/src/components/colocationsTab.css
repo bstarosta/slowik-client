@@ -1,0 +1,56 @@
+.colocations-tab {
+  margin: 20px 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.colocations-header {
+  margin-top: 0px;
+  font-size: 36px;
+}
+
+.colocations-table {
+  text-align: left;
+  width: 40%;
+  height: 400px;
+}
+
+.data-presentation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.slider-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.slider-header {
+  margin: 5px;
+  padding: 2px;
+}
+
+.slider {
+  margin: 5px;
+  padding: 5px;
+}
+
+.checkbox-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.checkbox-header {
+  font-size: small;
+  margin: 5px;
+  margin-left: 0px;
+  padding: 6px;
+  padding-left: 2px;
+}
+
+.checkbox {
+  margin: 5px;
+  padding: 5px;
+}

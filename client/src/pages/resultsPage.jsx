@@ -8,6 +8,8 @@ import ReactLoading from "react-loading";
 import AppHeader from "../components/appHeader";
 import AxiosClient from "../components/axiosClient";
 import OccurencesTab from "../components/occurencesTab";
+import ColocationsTab from "../components/colocationsTab";
+import partsOfSpeechMap from "../components/cTagToPartOfSpeech"
 
 class ResultsPage extends Component {
   constructor(props) {
@@ -18,6 +20,10 @@ class ResultsPage extends Component {
   state = {
     corpusId: "",
     occurencesFiles: "",
+    leftColocationsFiles: "",
+    rightColocationsFiles: "",
+    leftColocationRange: "1",
+    rightColocationRange: "1",
     word: "",
     wordNotFound: false,
     isWordInvalid: false,
@@ -39,7 +45,7 @@ class ResultsPage extends Component {
     else {
       this.setState({ stage: "Loading" });
       this.setState({ isWordInvalid: false });
-      this.getOccurencesFromServer();
+      this.getDataFromServer();
     }
   };
 
@@ -52,6 +58,7 @@ class ResultsPage extends Component {
       fileName,
       count,
     }));
+    console.log(processedData);
     return processedData;
   }
 
@@ -74,8 +81,70 @@ class ResultsPage extends Component {
     );
   };
 
+  processColocations(data) {
+    let processedData = [];
+    Object.entries(data).map(
+      function(x) {
+        return x[1].collocations.map(
+          function(y) {
+            let w = y.orth;
+            let l = y.lexems[0].base;
+            let c = partsOfSpeechMap[y.lexems[0].cTag.split(":")[0]] ? partsOfSpeechMap[y.lexems[0].cTag.split(":")[0]] : y.lexems[0].cTag.split(":")[0];
+            processedData.push({
+              word: w, 
+              lexem: l, 
+              cTag: c
+            });
+          }
+        );
+      }
+    );
+    console.log(processedData);
+    return processedData;
+  }
+  
+  getLeftColocationsFromServer = () => {
+    AxiosClient.get(
+      "/corpuses/" +
+        this.state.corpusId +
+        "/collocations?word=" +
+        this.state.word +
+        "&direction=" + "-" + this.state.leftColocationRange + "&scope=Sentence"
+    ).then(
+      (res) => {
+        let leftColocations = this.processColocations(res.data);
+        this.setState({ leftColocationsFiles: leftColocations });
+        this.setState({ stage: "Results" });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  getRightColocationsFromServer = () => {
+    AxiosClient.get(
+      "/Corpuses/" +
+        this.state.corpusId +
+        "/collocations?word=" +
+        this.state.word +
+        "&direction=" + this.state.rightColocationRange + "&scope=Sentence"
+    ).then(
+      (res) => {
+        let rightColocations = this.processColocations(res.data);
+        this.setState({ rightColocationsFiles: rightColocations });
+        this.setState({ stage: "Results" });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   getDataFromServer = () => {
     this.getOccurencesFromServer();
+    this.getLeftColocationsFromServer();
+    this.getRightColocationsFromServer();
   };
 
   componentDidMount() {
@@ -125,7 +194,13 @@ class ResultsPage extends Component {
         <Tab
           tabStyle="results-tab"
           isSelected={this.state.selected === "Colocations"}
-        ></Tab>
+        >
+          <ColocationsTab
+            word={this.state.word}
+            leftColocations={this.state.leftColocationsFiles}
+            rightColocations={this.state.rightColocationsFiles}
+          ></ColocationsTab>
+        </Tab>
       </TabNav>
     );
   }
