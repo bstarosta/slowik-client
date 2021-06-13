@@ -38,7 +38,7 @@ class WordInputBox extends Component {
               type="button"
               onClick={() => this.props.handleAnalyze()}
             >
-              Analyse
+              Analyze
             </button>
           </form>
         </div>
