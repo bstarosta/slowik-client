@@ -20,7 +20,7 @@ class WordInputBox extends Component {
           <div className="word-input-box-header-text">Enter a word</div>
           <div className="word-input-box-body-text">
             Enter a word you're interested in so we can provide statistics
-            regarding colocations and occurences
+            regarding collocations and occurences
           </div>
           <form>
             <input
