@@ -188,11 +188,11 @@ class CollocationsTab extends Component {
   handleLeftCheckboxChange = event => {
     if(this.state.crossSentenceLeft == false){
       this.setState({ crossSentenceLeft: true });
-      this.props.handleLeftCheck(this.state.crossSentenceLeft);
+      this.props.handleLeftCheck(true);
     }
     else if(this.state.crossSentenceLeft == true){
       this.setState({ crossSentenceLeft: false });
-      this.props.handleLeftCheck(this.state.crossSentenceLeft);
+      this.props.handleLeftCheck(false);
     }
   }
     
@@ -200,22 +200,24 @@ class CollocationsTab extends Component {
   handleRightCheckboxChange = event => {
     if(this.state.crossSentenceRight == false){
       this.setState({ crossSentenceRight: true });
-      this.props.handleRightCheck(this.state.crossSentenceRight);
+      this.props.handleRightCheck(true);
     }
     else if(this.state.crossSentenceRight == true){
       this.setState({ crossSentenceRight: false });
-      this.props.handleRightCheck(this.state.crossSentenceRight);
+      this.props.handleRightCheck(false);
     }
   }
 
   handleLeftSlider(e) {
     const newVal = Number(e.target.value);
     this.setState({leftSliderValue: newVal});
+    this.props.updateLeftRange(newVal);
   }
 
   handleRightSlider(e) {
     const newVal = Number(e.target.value);
     this.setState({rightSliderValue: newVal});
+    this.props.updateRightRange(newVal);
   }
 }
 

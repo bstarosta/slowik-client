@@ -18,6 +18,8 @@ class ResultsPage extends Component {
     this.handleWordChange = this.handleWordChange.bind(this);
     this.handleLeftCheckbox = this.handleLeftCheckbox.bind(this);
     this.handleRightCheckbox = this.handleRightCheckbox.bind(this);
+    this.handleLeftRangeChange = this.handleLeftRangeChange.bind(this);
+    this.handleRightRangeChange = this.handleRightRangeChange.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
   }
 
@@ -64,7 +66,6 @@ class ResultsPage extends Component {
       fileName,
       count,
     }));
-    console.log(processedData);
     return processedData;
   }
 
@@ -109,7 +110,6 @@ class ResultsPage extends Component {
         );
       }
     );
-    console.log(processedData);
     return processedData;
   }
   
@@ -231,6 +231,8 @@ class ResultsPage extends Component {
             rightCollocations={this.state.rightCollocationsFiles}
             handleRightCheck={this.handleRightCheckbox}
             handleLeftCheck={this.handleLeftCheckbox}
+            updateLeftRange={this.handleLeftRangeChange}
+            updateRightRange={this.handleRightRangeChange}
             refresh={this.handleRefresh}
           ></CollocationsTab>
         </Tab>
@@ -250,6 +252,14 @@ class ResultsPage extends Component {
         ></ReactLoading>
       </div>
     );
+  }
+
+  handleLeftRangeChange(val) {
+    this.setState({leftCollocationRange: val});
+  }
+
+  handleRightRangeChange(val) {
+    this.setState({rightCollocationRange: val});
   }
 
   handleRefresh() {
