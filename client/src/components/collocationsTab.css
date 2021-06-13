@@ -4,9 +4,38 @@
   flex-direction: column;
 }
 
+.collocations-header-wrapper {
+  margin: 20px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
 .collocations-header {
   margin-top: 0px;
   font-size: 36px;
+}
+
+.refresh-button {
+  margin: 0px 0px 0px 50px;
+  width: 124px;
+  height: 60px;
+  background-color: #576490;
+  border: solid black 1px;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  border-radius: 11px;
+  box-shadow: rgba(0, 0, 0, 0.44) 5px 5px 5px;
+}
+
+.refresh-button :hover {
+  box-shadow: rgba(0, 0, 0, 0.6) 5px 5px 5px;
 }
 
 .collocations-table {

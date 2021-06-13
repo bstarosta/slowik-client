@@ -18,6 +18,7 @@ class ResultsPage extends Component {
     this.handleWordChange = this.handleWordChange.bind(this);
     this.handleLeftCheckbox = this.handleLeftCheckbox.bind(this);
     this.handleRightCheckbox = this.handleRightCheckbox.bind(this);
+    this.handleRefresh = this.handleRefresh.bind(this);
   }
 
   state = {
@@ -230,6 +231,7 @@ class ResultsPage extends Component {
             rightCollocations={this.state.rightCollocationsFiles}
             handleRightCheck={this.handleRightCheckbox}
             handleLeftCheck={this.handleLeftCheckbox}
+            refresh={this.handleRefresh}
           ></CollocationsTab>
         </Tab>
       </TabNav>
@@ -248,6 +250,11 @@ class ResultsPage extends Component {
         ></ReactLoading>
       </div>
     );
+  }
+
+  handleRefresh() {
+    this.getDataFromServer();
+    this.renderResults();
   }
 }
 

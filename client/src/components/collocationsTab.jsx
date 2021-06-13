@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./collocationsTab.css";
+import "./wordInputBox.css";
 import DataTable from "react-data-table-component";
 import {RangeStepInput} from 'react-range-step-input';
 
@@ -22,9 +23,18 @@ class CollocationsTab extends Component {
   render() {
     return (
       <div className="collocations-tab">
-        <p className="collocations-header">
-          Collocations of the word "{this.props.word}"
-        </p>
+        <div className="collocations-header-wrapper">
+          <p className="collocations-header">
+            Collocations of the word "{this.props.word}"
+          </p>
+          <button
+              className="refresh-button"
+              type="button"
+              onClick={() => this.props.refresh()}
+            >
+              Refresh
+          </button>
+        </div>
         <div className="data-presentation">
 
           <div className="collocations-table">
