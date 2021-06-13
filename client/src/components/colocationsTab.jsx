@@ -3,19 +3,19 @@ import "./colocationsTab.css";
 import DataTable from "react-data-table-component";
 import ColocationsSlider from "../components/colocationsSlider"
 
-const CheckboxLeft = props => (
-  <input type="checkbox" {...props} />
-)
 
-const CheckboxRight = props => (
-  <input type="checkbox" {...props} />
-)
 
 class ColocationsTab extends Component {
+
+  constructor(props) {
+    super(props);
+  } 
+
   state = {
     crossSentenceLeft : false,
     crossSentenceRight : false
   };
+
 
   render() {
     return (
@@ -33,7 +33,12 @@ class ColocationsTab extends Component {
             </div>
 
             <div className="checkbox-field">
-              <div className="checkbox"><CheckboxLeft/></div>
+              <div className="checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={this.state.crossSentenceLeft} 
+                  onChange={this.handleLeftCheckboxChange}/>
+              </div>
               <div className="checkbox-header">Do not cross sentences</div>
 
             </div>
@@ -50,7 +55,12 @@ class ColocationsTab extends Component {
             </div>
 
             <div className="checkbox-field">
-              <div className="checkbox"><CheckboxRight/></div>
+              <div className="checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={this.state.crossSentenceRight} 
+                  onChange={this.handleRightCheckboxChange}/>
+              </div>
               <div className="checkbox-header">Do not cross sentences</div>
 
             </div>
@@ -147,12 +157,28 @@ class ColocationsTab extends Component {
     );
   }
 
-  handleLeftCheckboxChange = event =>
-    this.setState({ crossSentenceLeft: event.target.crossSentenceLeft })
+  handleLeftCheckboxChange = event => {
+    if(this.state.crossSentenceLeft == false){
+      this.setState({ crossSentenceLeft: true });
+      this.props.handleLeftCheck(this.state.crossSentenceLeft);
+    }
+    else if(this.state.crossSentenceLeft == true){
+      this.setState({ crossSentenceLeft: false });
+      this.props.handleLeftCheck(this.state.crossSentenceLeft);
+    }
+  }
+    
 
-  handleRightCheckboxChange = event =>
-    this.setState({ crossSentenceRight: event.target.crossSentenceright })
-
+  handleRightCheckboxChange = event => {
+    if(this.state.crossSentenceRight == false){
+      this.setState({ crossSentenceRight: true });
+      this.props.handleRightCheck(this.state.crossSentenceRight);
+    }
+    else if(this.state.crossSentenceRight == true){
+      this.setState({ crossSentenceRight: false });
+      this.props.handleRightCheck(this.state.crossSentenceRight);
+    }
+  }
 }
 
 export default ColocationsTab;

@@ -16,6 +16,8 @@ class ResultsPage extends Component {
   constructor(props) {
     super(props);
     this.handleWordChange = this.handleWordChange.bind(this);
+    this.handleLeftCheckbox = this.handleLeftCheckbox.bind(this);
+    this.handleRightCheckbox = this.handleRightCheckbox.bind(this);
   }
 
   state = {
@@ -25,7 +27,8 @@ class ResultsPage extends Component {
     rightColocationsFiles: "",
     leftColocationRange: "1",
     rightColocationRange: "1",
-    scope: "Sentence",
+    leftScope: "Paragraph",
+    rightScope: "Paragraph",
     word: "",
     wordNotFound: false,
     isWordInvalid: false,
@@ -115,7 +118,7 @@ class ResultsPage extends Component {
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + "-" + this.state.leftColocationRange + "&scope=" + this.state.scope
+        "&direction=" + "-" + this.state.leftColocationRange + "&scope=" + this.state.leftScope
     ).then(
       (res) => {
         let leftColocations = this.processColocations(res.data);
@@ -134,7 +137,7 @@ class ResultsPage extends Component {
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + this.state.rightColocationRange + "&scope=Sentence"
+        "&direction=" + this.state.rightColocationRange + "&scope=" + this.state.rightScope
     ).then(
       (res) => {
         let rightColocations = this.processColocations(res.data);
@@ -158,6 +161,24 @@ class ResultsPage extends Component {
       match: { params },
     } = this.props;
     this.setState({ corpusId: params.id });
+  }
+
+  handleLeftCheckbox(checked) {
+    if(checked == true){
+      this.state.leftScope = "Sentence"
+    }
+    else if(checked == false){
+      this.state.leftScope = "Paragraph"
+    }
+  }
+
+  handleRightCheckbox(checked) {
+    if(checked == true){
+      this.state.rightScope = "Sentence"
+    }
+    else if(checked == false){
+      this.state.rightScope = "Paragraph"
+    }
   }
 
   render() {
@@ -207,6 +228,8 @@ class ResultsPage extends Component {
             word={this.state.word}
             leftColocations={this.state.leftColocationsFiles}
             rightColocations={this.state.rightColocationsFiles}
+            handleRightCheck={this.handleRightCheckbox}
+            handleLeftCheck={this.handleLeftCheckbox}
           ></ColocationsTab>
         </Tab>
       </TabNav>
