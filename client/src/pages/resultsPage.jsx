@@ -9,7 +9,8 @@ import AppHeader from "../components/appHeader";
 import AxiosClient from "../components/axiosClient";
 import OccurencesTab from "../components/occurencesTab";
 import ColocationsTab from "../components/colocationsTab";
-import partsOfSpeechMap from "../components/cTagToPartOfSpeech"
+import partsOfSpeechMap from "../components/cTagToPartOfSpeech";
+import WordNotFoundBox from "../components/wordNotFoundBox";
 
 class ResultsPage extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class ResultsPage extends Component {
     rightColocationsFiles: "",
     leftColocationRange: "1",
     rightColocationRange: "1",
+    scope: "Sentence",
     word: "",
     wordNotFound: false,
     isWordInvalid: false,
@@ -113,7 +115,7 @@ class ResultsPage extends Component {
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + "-" + this.state.leftColocationRange + "&scope=Sentence"
+        "&direction=" + "-" + this.state.leftColocationRange + "&scope=" + this.state.scope
     ).then(
       (res) => {
         let leftColocations = this.processColocations(res.data);
