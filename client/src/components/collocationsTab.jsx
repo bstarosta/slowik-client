@@ -40,7 +40,7 @@ class CollocationsTab extends Component {
                 <div>
                   <RangeStepInput
                     min={1}
-                    max={5}
+                    max={10}
                     value={this.state.leftSliderValue}
                     step={1}
                     onChange={this.handleLeftSlider.bind(this)}
@@ -76,7 +76,7 @@ class CollocationsTab extends Component {
                 <div>
                   <RangeStepInput
                     min={1}
-                    max={5}
+                    max={10}
                     value={this.state.rightSliderValue}
                     step={1}
                     onChange={this.handleRightSlider.bind(this)}
