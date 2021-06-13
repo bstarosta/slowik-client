@@ -3,6 +3,10 @@ import {RangeStepInput} from 'react-range-step-input';
 import "./colocationsSlider.css";
 
 class ColocationsSlider extends Component {
+    constructor(props) {
+        super(props);
+    } 
+
     state = {
         value: 1
     }
@@ -28,7 +32,7 @@ class ColocationsSlider extends Component {
     onChange(e) {
         const newVal = Number(e.target.value);
         this.setState({value: newVal});
-}
+    }
 }
 
 export default ColocationsSlider;

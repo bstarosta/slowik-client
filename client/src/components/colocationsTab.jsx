@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./colocationsTab.css";
 import DataTable from "react-data-table-component";
 import ColocationsSlider from "../components/colocationsSlider"
+import {RangeStepInput} from 'react-range-step-input';
+import "./colocationsSlider.css";
 
 
 
@@ -13,7 +15,9 @@ class ColocationsTab extends Component {
 
   state = {
     crossSentenceLeft : false,
-    crossSentenceRight : false
+    crossSentenceRight : false,
+    leftSliderValue: 1,
+    rightSliderValue: 1,
   };
 
 
@@ -29,7 +33,18 @@ class ColocationsTab extends Component {
 
             <div className="slider-field">
               <div className="slider-header">Colocation range</div>
-              <div className="slider">{this.renderSlider()}</div>
+              <div className="slider-wrapper">
+                <div>
+                  <RangeStepInput
+                    min={1}
+                    max={5}
+                    value={this.state.leftSliderValue}
+                    step={1}
+                    onChange={this.handleLeftSlider.bind(this)}
+                  />
+                </div>
+                <div className="slider-value">{this.state.leftSliderValue}</div>
+              </div>
             </div>
 
             <div className="checkbox-field">
@@ -51,7 +66,18 @@ class ColocationsTab extends Component {
 
           <div className="slider-field">
               <div className="slider-header">Colocation range</div>
-              <div className="slider">{this.renderSlider()}</div>
+              <div className="slider-wrapper">
+                <div>
+                  <RangeStepInput
+                    min={1}
+                    max={5}
+                    value={this.state.rightSliderValue}
+                    step={1}
+                    onChange={this.handleRightSlider.bind(this)}
+                  />
+                </div>
+                <div className="slider-value">{this.state.rightSliderValue}</div>
+              </div>
             </div>
 
             <div className="checkbox-field">
@@ -75,7 +101,6 @@ class ColocationsTab extends Component {
 
   renderSlider() {
     return (
-      // <RangeStepInput></RangeStepInput>
       <ColocationsSlider/>
     );
   }
@@ -178,6 +203,16 @@ class ColocationsTab extends Component {
       this.setState({ crossSentenceRight: false });
       this.props.handleRightCheck(this.state.crossSentenceRight);
     }
+  }
+
+  handleLeftSlider(e) {
+    const newVal = Number(e.target.value);
+    this.setState({leftSliderValue: newVal});
+  }
+
+  handleRightSlider(e) {
+    const newVal = Number(e.target.value);
+    this.setState({rightSliderValue: newVal});
   }
 }
 
