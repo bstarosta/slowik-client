@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DataTable from "react-data-table-component";
 
-class ColocationsDataTable extends Component {
+class CollocationsDataTable extends Component {
   state = {};
   render() {
     const columns = [
@@ -42,4 +42,4 @@ class ColocationsDataTable extends Component {
   }
 }
 
-export default React.memo(ColocationsDataTable);
+export default React.memo(CollocationsDataTable);

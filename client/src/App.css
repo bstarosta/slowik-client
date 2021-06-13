@@ -49,7 +49,7 @@ html {
   background-color: #a3bcf9;
   border: 2px black solid;
   height: 700px;
-  margin: 0;
+  margin-bottom: 60px;
 }
 
 @keyframes App-logo-spin {

@@ -1,28 +1,28 @@
 import React, { Component } from "react";
 import "./collocationsTab.css";
 import "./wordInputBox.css";
-import DataTable from "react-data-table-component";
 import { RangeStepInput } from "react-range-step-input";
 import CollocationsDataTable from "./collocationsDataTable";
 
 class CollocationsTab extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     crossSentenceLeft: false,
     crossSentenceRight: false,
     leftSliderValue: 1,
     rightSliderValue: 1,
+    word: "",
   };
+
+  componentDidMount() {
+    this.setState({ word: this.props.word });
+  }
 
   render() {
     return (
       <div className="collocations-tab">
         <div className="collocations-header-wrapper">
           <p className="collocations-header">
-            Collocations of the word "{this.props.word}"
+            Collocations of the word "{this.state.word}"
           </p>
           <button
             className="refresh-button"
@@ -63,7 +63,7 @@ class CollocationsTab extends Component {
 
             <div>
               <CollocationsDataTable
-                title="Left colocations"
+                title="Left collocations"
                 colocations={this.props.leftCollocations}
               ></CollocationsDataTable>
             </div>
@@ -101,91 +101,13 @@ class CollocationsTab extends Component {
 
             <div>
               <CollocationsDataTable
-                title="Right colocations"
+                title="Right collocations"
                 colocations={this.props.rightCollocations}
               ></CollocationsDataTable>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-
-  renderLeftTable() {
-    const columns = [
-      {
-        name: "Word",
-        selector: "word",
-        sortable: true,
-        width: "25%",
-        allowOverflow: false,
-      },
-      {
-        name: "Lexem",
-        selector: "lexem",
-        sortable: true,
-        width: "25%",
-        allowOverflow: false,
-      },
-      {
-        name: "Part of speech",
-        selector: "cTag",
-        sortable: true,
-        width: "50%",
-        allowOverflow: false,
-      },
-    ];
-
-    return (
-      <React.Fragment>
-        <DataTable
-          title="Left collocations"
-          columns={columns}
-          data={this.props.leftCollocations}
-          highlightOnHover
-          fixedHeader
-          fixedHeaderScrollHeight="300px"
-        ></DataTable>
-      </React.Fragment>
-    );
-  }
-
-  renderRightTable() {
-    const columns = [
-      {
-        name: "Word",
-        selector: "word",
-        sortable: true,
-        width: "25%",
-        allowOverflow: false,
-      },
-      {
-        name: "Lexem",
-        selector: "lexem",
-        sortable: true,
-        width: "25%",
-        allowOverflow: false,
-      },
-      {
-        name: "Part of speech",
-        selector: "cTag",
-        sortable: true,
-        width: "50%",
-        allowOverflow: false,
-      },
-    ];
-
-    return (
-      <React.Fragment>
-        <DataTable
-          title="Right collocations"
-          columns={columns}
-          data={this.props.rightCollocations}
-          highlightOnHover
-          fixedHeader
-          fixedHeaderScrollHeight="300px"
-        ></DataTable>
-      </React.Fragment>
     );
   }
 

@@ -35,7 +35,7 @@
   box-shadow: rgba(0, 0, 0, 0.44) 5px 5px 5px;
 }
 
-.word-input-box-button :hover {
+.word-input-box-button:hover {
   box-shadow: rgba(0, 0, 0, 0.6) 5px 5px 5px;
 }
 
