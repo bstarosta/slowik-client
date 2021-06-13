@@ -1,15 +1,15 @@
-.colocations-tab {
+.collocations-tab {
   margin: 20px 60px;
   display: flex;
   flex-direction: column;
 }
 
-.colocations-header {
+.collocations-header {
   margin-top: 0px;
   font-size: 36px;
 }
 
-.colocations-table {
+.collocations-table {
   text-align: left;
   width: 40%;
   height: 400px;
@@ -29,6 +29,17 @@
 .slider-header {
   margin: 5px;
   padding: 2px;
+}
+
+.slider-value{
+  font-size: small;
+  margin: 0px 5px 0px 10px;
+}
+
+.slider-wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
 }
 
 .slider {

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import "./colocationsTab.css";
+import "./collocationsTab.css";
 import DataTable from "react-data-table-component";
-import ColocationsSlider from "../components/colocationsSlider"
 import {RangeStepInput} from 'react-range-step-input';
-import "./colocationsSlider.css";
 
 
 
-class ColocationsTab extends Component {
+class CollocationsTab extends Component {
 
   constructor(props) {
     super(props);
@@ -23,16 +21,16 @@ class ColocationsTab extends Component {
 
   render() {
     return (
-      <div className="colocations-tab">
-        <p className="colocations-header">
+      <div className="collocations-tab">
+        <p className="collocations-header">
           Collocations of the word "{this.props.word}"
         </p>
         <div className="data-presentation">
 
-          <div className="colocations-table">
+          <div className="collocations-table">
 
             <div className="slider-field">
-              <div className="slider-header">Colocation range</div>
+              <div className="slider-header">Collocation range</div>
               <div className="slider-wrapper">
                 <div>
                   <RangeStepInput
@@ -62,10 +60,10 @@ class ColocationsTab extends Component {
             <div>{this.renderLeftTable()}</div>
           </div>
           
-          <div className="colocations-table">
+          <div className="collocations-table">
 
           <div className="slider-field">
-              <div className="slider-header">Colocation range</div>
+              <div className="slider-header">Collocation range</div>
               <div className="slider-wrapper">
                 <div>
                   <RangeStepInput
@@ -99,11 +97,6 @@ class ColocationsTab extends Component {
     );
   }
 
-  renderSlider() {
-    return (
-      <ColocationsSlider/>
-    );
-  }
   renderLeftTable() {
     const columns = [
       {
@@ -132,9 +125,9 @@ class ColocationsTab extends Component {
     return (
       <React.Fragment>
         <DataTable
-          title="Left colocations"
+          title="Left collocations"
           columns={columns}
-          data={this.props.leftColocations}
+          data={this.props.leftCollocations}
           highlightOnHover
           fixedHeader
           fixedHeaderScrollHeight="300px"
@@ -171,9 +164,9 @@ class ColocationsTab extends Component {
     return (
       <React.Fragment>
         <DataTable
-          title="Right colocations"
+          title="Right collocations"
           columns={columns}
-          data={this.props.rightColocations}
+          data={this.props.rightCollocations}
           highlightOnHover
           fixedHeader
           fixedHeaderScrollHeight="300px"
@@ -216,4 +209,4 @@ class ColocationsTab extends Component {
   }
 }
 
-export default ColocationsTab;
+export default CollocationsTab;

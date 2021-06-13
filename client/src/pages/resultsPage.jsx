@@ -8,7 +8,7 @@ import ReactLoading from "react-loading";
 import AppHeader from "../components/appHeader";
 import AxiosClient from "../components/axiosClient";
 import OccurencesTab from "../components/occurencesTab";
-import ColocationsTab from "../components/colocationsTab";
+import CollocationsTab from "../components/collocationsTab";
 import partsOfSpeechMap from "../components/cTagToPartOfSpeech";
 import WordNotFoundBox from "../components/wordNotFoundBox";
 
@@ -23,16 +23,16 @@ class ResultsPage extends Component {
   state = {
     corpusId: "",
     occurencesFiles: "",
-    leftColocationsFiles: "",
-    rightColocationsFiles: "",
-    leftColocationRange: "1",
-    rightColocationRange: "1",
+    leftCollocationsFiles: "",
+    rightCollocationsFiles: "",
+    leftCollocationRange: "1",
+    rightCollocationRange: "1",
     leftScope: "Paragraph",
     rightScope: "Paragraph",
     word: "",
     wordNotFound: false,
     isWordInvalid: false,
-    tabs: ["Occurences", "Colocations"],
+    tabs: ["Occurences", "Collocations"],
     selected: "Occurences",
     stage: "Start",
   };
@@ -90,7 +90,7 @@ class ResultsPage extends Component {
     );
   };
 
-  processColocations(data) {
+  processCollocations(data) {
     let processedData = [];
     Object.entries(data).map(
       function(x) {
@@ -112,17 +112,17 @@ class ResultsPage extends Component {
     return processedData;
   }
   
-  getLeftColocationsFromServer = () => {
+  getLeftCollocationsFromServer = () => {
     AxiosClient.get(
       "/corpuses/" +
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + "-" + this.state.leftColocationRange + "&scope=" + this.state.leftScope
+        "&direction=" + "-" + this.state.leftCollocationRange + "&scope=" + this.state.leftScope
     ).then(
       (res) => {
-        let leftColocations = this.processColocations(res.data);
-        this.setState({ leftColocationsFiles: leftColocations });
+        let leftCollocations = this.processCollocations(res.data);
+        this.setState({ leftCollocationsFiles: leftCollocations });
         this.setState({ stage: "Results" });
       },
       (error) => {
@@ -131,17 +131,17 @@ class ResultsPage extends Component {
     );
   };
 
-  getRightColocationsFromServer = () => {
+  getRightCollocationsFromServer = () => {
     AxiosClient.get(
       "/Corpuses/" +
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + this.state.rightColocationRange + "&scope=" + this.state.rightScope
+        "&direction=" + this.state.rightCollocationRange + "&scope=" + this.state.rightScope
     ).then(
       (res) => {
-        let rightColocations = this.processColocations(res.data);
-        this.setState({ rightColocationsFiles: rightColocations });
+        let rightCollocations = this.processCollocations(res.data);
+        this.setState({ rightCollocationsFiles: rightCollocations });
         this.setState({ stage: "Results" });
       },
       (error) => {
@@ -152,8 +152,8 @@ class ResultsPage extends Component {
 
   getDataFromServer = () => {
     this.getOccurencesFromServer();
-    this.getLeftColocationsFromServer();
-    this.getRightColocationsFromServer();
+    this.getLeftCollocationsFromServer();
+    this.getRightCollocationsFromServer();
   };
 
   componentDidMount() {
@@ -222,15 +222,15 @@ class ResultsPage extends Component {
         </Tab>
         <Tab
           tabStyle="results-tab"
-          isSelected={this.state.selected === "Colocations"}
+          isSelected={this.state.selected === "Collocations"}
         >
-          <ColocationsTab
+          <CollocationsTab
             word={this.state.word}
-            leftColocations={this.state.leftColocationsFiles}
-            rightColocations={this.state.rightColocationsFiles}
+            leftCollocations={this.state.leftCollocationsFiles}
+            rightCollocations={this.state.rightCollocationsFiles}
             handleRightCheck={this.handleRightCheckbox}
             handleLeftCheck={this.handleLeftCheckbox}
-          ></ColocationsTab>
+          ></CollocationsTab>
         </Tab>
       </TabNav>
     );
