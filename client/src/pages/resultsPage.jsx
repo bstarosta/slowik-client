@@ -25,7 +25,7 @@ class ResultsPage extends Component {
 
   state = {
     corpusId: "",
-    occurencesFiles: "",
+    occurencesFiles: [],
     leftCollocationsFiles: "",
     rightCollocationsFiles: "",
     leftCollocationRange: "1",
@@ -94,37 +94,43 @@ class ResultsPage extends Component {
 
   processCollocations(data) {
     let processedData = [];
-    Object.entries(data).map(
-      function(x) {
-        return x[1].collocations.map(
-          function(y) {
-            let w = y.orth;
-            let l = y.lexems[0].base;
-            let c = partsOfSpeechMap[y.lexems[0].cTag.split(":")[0]] ? partsOfSpeechMap[y.lexems[0].cTag.split(":")[0]] : y.lexems[0].cTag.split(":")[0];
-            processedData.push({
-              word: w, 
-              lexem: l, 
-              cTag: c
-            });
-          }
-        );
-      }
-    );
+    Object.entries(data).map(function (x) {
+      return x[1].collocations.map(function (y) {
+        let w = y.orth;
+        let l = y.lexems[0].base;
+        let c = partsOfSpeechMap[y.lexems[0].cTag.split(":")[0]]
+          ? partsOfSpeechMap[y.lexems[0].cTag.split(":")[0]]
+          : y.lexems[0].cTag.split(":")[0];
+        processedData.push({
+          word: w,
+          lexem: l,
+          cTag: c,
+        });
+      });
+    });
     return processedData;
   }
-  
+
   getLeftCollocationsFromServer = () => {
     AxiosClient.get(
       "/corpuses/" +
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + "-" + this.state.leftCollocationRange + "&scope=" + this.state.leftScope
+        "&direction=" +
+        "-" +
+        this.state.leftCollocationRange +
+        "&scope=" +
+        this.state.leftScope
     ).then(
       (res) => {
-        let leftCollocations = this.processCollocations(res.data);
-        this.setState({ leftCollocationsFiles: leftCollocations });
-        this.setState({ stage: "Results" });
+        if (res.status === 200) {
+          let leftCollocations = this.processCollocations(res.data);
+          this.setState({ leftCollocationsFiles: leftCollocations });
+          this.setState({ stage: "Results" });
+        } else if (res.status === 204) {
+          this.setState({ stage: "NoWord" });
+        }
       },
       (error) => {
         console.log(error);
@@ -138,12 +144,19 @@ class ResultsPage extends Component {
         this.state.corpusId +
         "/collocations?word=" +
         this.state.word +
-        "&direction=" + this.state.rightCollocationRange + "&scope=" + this.state.rightScope
+        "&direction=" +
+        this.state.rightCollocationRange +
+        "&scope=" +
+        this.state.rightScope
     ).then(
       (res) => {
-        let rightCollocations = this.processCollocations(res.data);
-        this.setState({ rightCollocationsFiles: rightCollocations });
-        this.setState({ stage: "Results" });
+        if (res.status === 200) {
+          let rightCollocations = this.processCollocations(res.data);
+          this.setState({ rightCollocationsFiles: rightCollocations });
+          this.setState({ stage: "Results" });
+        } else if (res.status === 204) {
+          this.setState({ stage: "NoWord" });
+        }
       },
       (error) => {
         console.log(error);
@@ -165,20 +178,18 @@ class ResultsPage extends Component {
   }
 
   handleLeftCheckbox(checked) {
-    if(checked == true){
-      this.state.leftScope = "Sentence"
-    }
-    else if(checked == false){
-      this.state.leftScope = "Paragraph"
+    if (checked === true) {
+      this.setState({ leftScope: "Sentence" });
+    } else if (checked === false) {
+      this.setState({ leftScope: "Paragraph" });
     }
   }
 
   handleRightCheckbox(checked) {
-    if(checked == true){
-      this.state.rightScope = "Sentence"
-    }
-    else if(checked == false){
-      this.state.rightScope = "Paragraph"
+    if (checked === true) {
+      this.setState({ rightScope: "Sentence" });
+    } else if (checked === false) {
+      this.setState({ rightScope: "Paragraph" });
     }
   }
 
@@ -255,11 +266,11 @@ class ResultsPage extends Component {
   }
 
   handleLeftRangeChange(val) {
-    this.setState({leftCollocationRange: val});
+    this.setState({ leftCollocationRange: val });
   }
 
   handleRightRangeChange(val) {
-    this.setState({rightCollocationRange: val});
+    this.setState({ rightCollocationRange: val });
   }
 
   handleRefresh() {
